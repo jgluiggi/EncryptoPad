@@ -8,7 +8,7 @@ interface UserAttributes {
     password: string;
 }
 
-export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+export class User extends Model<UserAttributes> implements UserAttributes {
     public id!: number;
     public email!: string;
     public username!: string;
@@ -19,7 +19,7 @@ User.init(
     {
         id: {
             type: DataTypes.INTEGER,
-            autoincrement: true,
+            autoIncrement: true,
             primaryKey: true,
         },
         email: {

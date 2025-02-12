@@ -14,6 +14,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "pg": "^8.13.2",
+    "projeto-pdw": "file:",
     "sequelize": "^6.37.5"
   },
   "devDependencies": {
