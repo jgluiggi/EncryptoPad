@@ -5,9 +5,9 @@ services:
     image: postgres:latest
     container_name: postgres-container
     environment:
-      - POSTGRES_USER=myuser
-      - POSTGRES_PASSWORD=mypassword
-      - POSTGRES_DB=mydatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD="post#19"
+      - POSTGRES_DB=postgres
     ports:
       - "5432:5432"
     volumes:
@@ -21,7 +21,7 @@ services:
     depends_on:
       - postgres
     environment:
-      - DATABASE_URL=postgresql://myuser:mypassword@postgres:5432/mydatabase
+      - DATABASE_URL=postgresql://postgres:post#19@postgres:5432/postgres
     ports:
       - "3000:3000"
     volumes:
