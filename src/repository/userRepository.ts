@@ -20,4 +20,16 @@ export class UserRepository {
     async getUserByUsername(username: string) {
         return await User.findOne({ where: { username } });
     }
+
+    async updateUser(id: number, email: string, username: string, password: string) {
+        return await User.update({
+            email,
+            username,
+            password
+        }, {
+            where: {
+                id
+            }
+        });
+    }
 }

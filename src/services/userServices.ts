@@ -1,4 +1,3 @@
-// user services file
 import { UserRepository } from "../repository/userRepository";
 const userRepo = new UserRepository();
 
@@ -42,6 +41,18 @@ export class UserServices {
       return user;
     } catch (error) {
       throw new Error(`Erro ao buscar usuário: ${(error as Error).message}`);
+    }
+  }
+
+  async updateUser(id: number, email: string, username: string, password: string) {
+    try {
+      const user = await userRepo.updateUser(id, email, username, password);
+      if (user[0] === 0) {
+        throw new Error("Usuário não encontrado");
+      }
+      return user;
+    } catch (error) {
+      throw new Error(`Erro ao atualizar usuário: ${(error as Error).message}`);
     }
   }
 }

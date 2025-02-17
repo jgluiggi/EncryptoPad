@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD="post#19"
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  typescript-app:
+    build: ./typescript-app
+    container_name: typescript-app-container
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://postgres:post#19@postgres:5432/postgres
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./typescript-app:/usr/src/app
+    networks:
+      - backend
+    command: ["npm", "run", "dev"]
+
+volumes:
+  postgres-data:
+
+networks:
+  backend:
+    driver: bridge

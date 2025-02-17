@@ -35,9 +35,21 @@ export const getUserById = async (req: Request, res: Response) => {
 export const getUserByUsername = async (req: Request, res: Response) => {
   try {
     const username = req.params.username;
+    console.log(username);
     const user = await userService.getUserByUsername(username);
     res.json(user);
   } catch (error: any) {
     res.status(500).json({ message: "Erro ao obter o usuário", error: error.message });
+  }
+};
+
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const { email, username, password } = req.body;
+    const id = parseInt(req.params.id);
+    const user = await userService.updateUser(id, email, username, password);
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: "Erro ao atualizar o usuário", error: error.message });
   }
 };
