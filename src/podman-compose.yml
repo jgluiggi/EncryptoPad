@@ -6,7 +6,7 @@ services:
     container_name: postgres-container
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD="post#19"
+      - POSTGRES_PASSWORD=${DB_PASS}
       - POSTGRES_DB=postgres
     ports:
       - "5432:5432"
@@ -16,16 +16,16 @@ services:
       - backend
 
   typescript-app:
-    build: ./typescript-app
+    build: .
     container_name: typescript-app-container
     depends_on:
       - postgres
     environment:
-      - DATABASE_URL=postgresql://postgres:post#19@postgres:5432/postgres
+      - DB_HOST=postgres
     ports:
       - "3000:3000"
     volumes:
-      - ./typescript-app:/usr/src/app
+      - ./:/usr/src/app
     networks:
       - backend
     command: ["npm", "run", "dev"]
