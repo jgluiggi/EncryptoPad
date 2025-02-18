@@ -16,6 +16,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  snyk:
     name: Snyk
     runs-on: ubuntu-latest
     steps:
