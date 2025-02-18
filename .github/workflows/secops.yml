@@ -26,6 +26,6 @@ jobs:
         uses: snyk/actions/node@master
         continue-on-error: true
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_API_TOKEN }}
-        with:
-          command: test ./src
+          SNYK_TOKEN: ${{ secrets.SNYK_API_KEY }}
+        #with:
+          #command: test ./src
