@@ -1,35 +1,33 @@
 import * as express from "express";
 import * as dotenv from "dotenv";
+import * as swaggerUi from "swagger-ui-express";
+import * as swaggerJSDoc from "swagger-jsdoc";
 import sequelize from "./config/database";
-import { UserRepository } from "./repository/userRepository";
+import noteRoutes from "./routes/noteRoutes";
 
 dotenv.config();
 
 const app = express();
+
+const swaggerOptions: swaggerJSDoc.Options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "EncryptoPad",
+            version: "0.1",
+            description: "API para o sistema EncryptoPad de anotações criptografadas.",
+            },
+    },
+    apis: ["./routes/*.ts"],
+};
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/notes", noteRoutes);
 
 const port = 3000;
-
-const userRepo = new UserRepository();
-
-app.post('/users', async(req, res) => {
-    try {
-        const {email, username, password} = req.body;
-        const user = await userRepo.createUser(email, username, password);
-        res.json(user);
-    } catch (error:any){
-        res.status(500).json({message: "Erro ao criar o usuário", error:error.message});
-    }
-});
-
-app.get('/users', async(req, res) => {
-    try {
-        const users = await userRepo.getAllUsers();
-        res.json(users);
-    } catch (error:any){
-        res.status(500).json({message: "Erro ao obter os usuários", error:error.message});
-    }
-});
 
 sequelize.sync({ force: true }).then(() => {
     console.log("Banco de dados conectado!");
