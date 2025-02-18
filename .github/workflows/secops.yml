@@ -25,7 +25,7 @@ jobs:
       - name: Snyk Scan
         uses: snyk/actions/node@master
         continue-on-error: true
+        with:
+          args: --all-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_API_KEY }}
-        with:
-          command: test src/
