@@ -35,7 +35,6 @@ export const getUserById = async (req: Request, res: Response) => {
 export const getUserByUsername = async (req: Request, res: Response) => {
   try {
     const username = req.params.username;
-    console.log(username);
     const user = await userService.getUserByUsername(username);
     res.json(user);
   } catch (error: any) {
@@ -47,9 +46,32 @@ export const updateUser = async (req: Request, res: Response) => {
   try {
     const { email, username, password } = req.body;
     const id = parseInt(req.params.id);
-    const user = await userService.updateUser(id, email, username, password);
+    let user = await userService.updateUserUsername(id, username);
+    user = await userService.updateUserPassword(id, password);
+    user = await userService.updateUserEmail(id, email);
     res.json(user);
   } catch (error: any) {
     res.status(500).json({ message: "Erro ao atualizar o usuário", error: error.message });
+  }
+};
+
+export const updateUserPassword = async (req: Request, res: Response) => {
+  try {
+    const password = req.body.password;
+    const id = parseInt(req.params.id);
+    const user = await userService.updateUserPassword(id, password);
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: "Erro ao atualizar o usuário", error: error.message });
+  }
+}
+
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id);
+    const user = await userService.deleteUser(id);
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: "Erro ao deletar o usuário", error: error.message });
   }
 };
