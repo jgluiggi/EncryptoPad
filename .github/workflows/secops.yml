@@ -27,5 +27,5 @@ jobs:
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_API_KEY }}
-        #with:
-          #command: test ./src
+        with:
+          command: test src/
