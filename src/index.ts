@@ -1,4 +1,5 @@
 import * as express from "express";
+import helmet from "helmet";
 import * as dotenv from "dotenv";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJSDoc from "swagger-jsdoc";
@@ -25,6 +26,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use(express.json());
+app.use(helmet());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users", userRoutes);
 app.use("/notes", noteRoutes);

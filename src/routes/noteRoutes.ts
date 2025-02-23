@@ -24,12 +24,20 @@ const router = Router();
  *           format: date-time
  */
 
+/**
+ * @swagger
+ * tags:
+ *   name: Notes
+ *   description: Endpoints for note management
+ */
+
 /** 
  * @swagger
  * /getAll:
  *   get:
  *     summary: Retrieve all notes
  *     description: Get a list of all notes
+ *     tags: [Notes]
  *     responses:
  *       200:
  *         description: Successful operation
@@ -48,6 +56,7 @@ router.get("/getAll", NoteController.getAllNotes);
  *   get:
  *     summary: Get a note by ID
  *     description: Retrieve a specific note using its ID
+ *     tags: [Notes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -72,6 +81,7 @@ router.get("/getById/:id", NoteController.getNoteById);
  *   post:
  *     summary: Create a new note
  *     description: Add a new note to the database
+ *     tags: [Notes]
  *     requestBody:
  *       required: true
  *       content:
@@ -99,6 +109,7 @@ router.post("/create", NoteController.createNote);
  *   put:
  *     summary: Update a note
  *     description: Modify an existing note
+ *     tags: [Notes]
  *     parameters:
  *       - in: path
  *         name: id
@@ -134,6 +145,7 @@ router.put("/update/:id", NoteController.updateNote);
  *   delete:
  *     summary: Delete a note
  *     description: Remove a note from the database
+ *     tags: [Notes]
  *     parameters:
  *       - in: path
  *         name: id

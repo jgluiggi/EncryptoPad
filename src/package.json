@@ -13,6 +13,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "helmet": "^8.0.0",
     "pg": "^8.13.2",
     "projeto-pdw": "file:",
     "sequelize": "^6.37.5",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.0",
+    "@types/helmet": "^0.0.48",
     "@types/node": "^22.13.1",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.7",
