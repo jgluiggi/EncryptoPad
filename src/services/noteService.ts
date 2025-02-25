@@ -11,7 +11,7 @@ class NoteService {
         return note;
     }
 
-    static async createNote(data: { title: string; content: string }) {
+    static async createNote(data: { title: string; content: string ; folder_id: number}) {
         if (!data.title || !data.content) throw new Error("Title and content are required");
         return await NoteRepository.create(data);
     }

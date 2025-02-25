@@ -9,7 +9,7 @@ class NoteRepository {
         return await Note.findByPk(id);
     }
 
-    static async create(data: { title: string; content: string }) {
+    static async create(data: { title: string; content: string , folder_id: number}) {
         return await Note.create(data);
     }
 

@@ -1,12 +1,22 @@
-import { Model, DataTypes, BelongsToGetAssociationMixin, HasManyGetAssociationsMixin, HasManyAddAssociationMixin } from 'sequelize';
+import { Model, DataTypes, Optional, BelongsToGetAssociationMixin, HasManyGetAssociationsMixin, HasManyAddAssociationMixin } from 'sequelize';
 import sequelize from "../config/database";
 import User from './User';
 import Note from './Note';
 
-class Folder extends Model {
+interface FolderAttributes {
+  id: number;
+  name: string;
+  user_id: number;
+  note_ids: number[];
+}
+
+interface FolderCreationAttributes extends Optional<FolderAttributes, "id"> {}
+
+export class Folder extends Model<FolderAttributes, FolderCreationAttributes> implements FolderAttributes {
   public id!: number;
   public name!: string;
   public user_id!: number;
+  public note_ids!: number[];
 
   public getParentUser!: BelongsToGetAssociationMixin<User>;
   public getNotes!: HasManyGetAssociationsMixin<Note>;
@@ -41,6 +51,14 @@ Folder.init(
       references: {
         model: 'users',
         key: 'id',
+      },
+    },
+    note_ids: {
+      type: DataTypes.ARRAY,
+      allowNull: true,
+      references: {
+          model: 'notes',
+          key: 'id',
       },
     },
   },
