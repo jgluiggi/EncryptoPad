@@ -22,13 +22,15 @@ services:
       - postgres
     environment:
       - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=${DB_PASS}
     ports:
       - "3000:3000"
     volumes:
       - ./:/usr/src/app
     networks:
       - backend
-    command: ["npm", "run", "dev"]
+    command: ["node", "lib/index.js"]
 
 volumes:
   postgres-data:
