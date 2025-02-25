@@ -33,7 +33,7 @@ const router = Router();
 
 /** 
  * @swagger
- * /getAll:
+ * /notes/getAll:
  *   get:
  *     summary: Retrieve all notes
  *     description: Get a list of all notes
@@ -52,7 +52,7 @@ router.get("/getAll", NoteController.getAllNotes);
 
 /** 
  * @swagger
- * /getById/{id}:
+ * /notes/getById/{id}:
  *   get:
  *     summary: Get a note by ID
  *     description: Retrieve a specific note using its ID
@@ -77,7 +77,7 @@ router.get("/getById/:id", NoteController.getNoteById);
 
 /** 
  * @swagger
- * /create:
+ * /notes/create:
  *   post:
  *     summary: Create a new note
  *     description: Add a new note to the database
@@ -105,7 +105,7 @@ router.post("/create", NoteController.createNote);
 
  /** 
  * @swagger
- * /update/{id}:
+ * /notes/update/{id}:
  *   put:
  *     summary: Update a note
  *     description: Modify an existing note
@@ -141,7 +141,7 @@ router.put("/update/:id", NoteController.updateNote);
 
 /** 
  * @swagger
- * /delete/{id}:
+ * /notes/delete/{id}:
  *   delete:
  *     summary: Delete a note
  *     description: Remove a note from the database
