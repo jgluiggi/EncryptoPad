@@ -30,7 +30,7 @@ services:
       - ./:/usr/src/app
     networks:
       - backend
-    command: ["node", "lib/index.js"]
+    #command: ["node", "lib/index.js"]
 
 volumes:
   postgres-data:
