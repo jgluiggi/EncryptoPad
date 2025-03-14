@@ -7,7 +7,6 @@ interface FolderAttributes {
   id: number;
   name: string;
   user_id: number;
-  note_ids: number[];
 }
 
 interface FolderCreationAttributes extends Optional<FolderAttributes, "id"> {}
@@ -16,7 +15,6 @@ export class Folder extends Model<FolderAttributes, FolderCreationAttributes> im
   public id!: number;
   public name!: string;
   public user_id!: number;
-  public note_ids!: number[];
 
   public getParentUser!: BelongsToGetAssociationMixin<User>;
   public getNotes!: HasManyGetAssociationsMixin<Note>;
@@ -51,14 +49,6 @@ Folder.init(
       references: {
         model: 'users',
         key: 'id',
-      },
-    },
-    note_ids: {
-      type: DataTypes.ARRAY,
-      allowNull: true,
-      references: {
-          model: 'notes',
-          key: 'id',
       },
     },
   },
