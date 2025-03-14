@@ -1,5 +1,6 @@
-import { Model, DataTypes, Optional } from "sequelize";
+import { Model, DataTypes, Optional, HasManyGetAssociationsMixin, HasManyAddAssociationMixin } from "sequelize";
 import sequelize from "../config/database";
+import Folder from "./Folder";
 
 interface UserAttributes {
   id: number;
@@ -15,6 +16,16 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public email!: string;
   public username!: string;
   public password!: string;
+
+  public getFolders!: HasManyGetAssociationsMixin<Folder>;
+  public addFolder!: HasManyAddAssociationMixin<Folder, number>;
+
+  public static associate() {
+        User.hasMany(Folder, {
+            foreignKey: 'user_id',
+            as: 'folders',
+            });
+    }
 }
 
 User.init(
