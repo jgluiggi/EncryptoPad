@@ -6,6 +6,7 @@ import * as swaggerJSDoc from "swagger-jsdoc";
 import sequelize from "./config/database";
 import userRoutes from "./routes/userRoutes";
 import noteRoutes from "./routes/noteRoutes";
+import folderRoutes from "./routes/folderRoutes";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use(helmet());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users", userRoutes);
 app.use("/notes", noteRoutes);
+app.use("/folders", folderRoutes);
 
 const port = process.env.PORT || 3000;
   
