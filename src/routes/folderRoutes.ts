@@ -1,5 +1,11 @@
 import { Router } from "express";
-import folderController from "../controllers/folderController";
+import {
+    getAllFolders,
+    getFolderById,
+    createFolder,
+    updateFolder,
+    deleteFolder,
+} from "../controllers/folderController";
 
 const router = Router();
 
@@ -42,7 +48,7 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/folder'
  */ 
-router.get("/getAll", folderController.getAllFolders);
+router.get("/getAll", getAllFolders);
 
 /** 
  * @swagger
@@ -67,7 +73,7 @@ router.get("/getAll", folderController.getAllFolders);
  *       404:
  *         description: folder not found
  */ 
-router.get("/getById/:id", folderController.getFolderById);
+router.get("/getById/:id", getFolderById);
 
 /** 
  * @swagger
@@ -95,7 +101,7 @@ router.get("/getById/:id", folderController.getFolderById);
  *             schema:
  *               $ref: '#/components/schemas/folder'
  */
-router.post("/create", folderController.createFolder);
+router.post("/create", createFolder);
 
  /** 
  * @swagger
@@ -131,7 +137,7 @@ router.post("/create", folderController.createFolder);
  *       404:
  *         description: folder not found
  */
-router.put("/update/:id", folderController.updateFolder);
+router.put("/update/:id", updateFolder);
 
 /** 
  * @swagger
@@ -153,6 +159,6 @@ router.put("/update/:id", folderController.updateFolder);
  *         description: folder not found
  * 
  */
-router.delete("/delete/:id", folderController.deleteFolder);
+router.delete("/delete/:id", deleteFolder);
 
 export default router;

@@ -75,6 +75,40 @@ const router = Router();
  */
 router.post("/register", register);
 
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Login
+ *     description: Endpoint to authenticate a user in the system.
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "email@email.com"
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: "password123"
+ *     responses:
+ *       200:
+ *         description: User successfully authenticated
+ *       400:
+ *         description: Bad request (invalid data)
+ *       500:
+ *         description: Internal server error
+ * 
+ */
 router.post("/login", login);
 
 /**
