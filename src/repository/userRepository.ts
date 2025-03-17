@@ -22,6 +22,10 @@ export class UserRepository {
         return await User.findOne({ where: { username } });
     }
 
+    async getUserByEmail(email: string) {
+        return await User.findOne({ where: { email } });
+    }
+
     async updateUserUsername(id: number, username: string) {
         return await User.update({
             username
