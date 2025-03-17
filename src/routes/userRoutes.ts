@@ -38,9 +38,9 @@ const router = Router();
 
 /**
  * @swagger
- * /users/create:
+ * /users/register:
  *   post:
- *     summary: Create a new user
+ *     summary: Register a new user
  *     description: Endpoint to create a new user in the system.
  *     tags: [Users]
  *     requestBody:
