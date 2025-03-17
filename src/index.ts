@@ -1,6 +1,5 @@
 import * as express from "express";
 import helmet from "helmet";
-import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJSDoc from "swagger-jsdoc";
@@ -25,7 +24,6 @@ const swaggerOptions: swaggerJSDoc.Options = {
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
-const secret = process.env.JWT_SECRET;
 
 app.use(express.json());
 app.use(helmet());
