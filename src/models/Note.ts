@@ -1,10 +1,12 @@
-import { DataTypes, Model, Optional } from "sequelize";
+import { DataTypes, Model, BelongsToGetAssociationMixin, Optional } from "sequelize";
 import sequelize from "../config/database";
+import Folder from './Folder';
 
 interface NoteAttributes {
     id: number;
     title: string;
     content: string;
+    folder_id: number;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -15,8 +17,16 @@ class Note extends Model<NoteAttributes, NoteCreationAttributes> implements Note
     public id!: number;
     public title!: string;
     public content!: string;
+    public folder_id!: number;
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
+
+    public static associate() {
+        Note.belongsTo(Folder, {
+          foreignKey: 'folder_id',
+          as: 'parent_folder',
+        });
+    }
 }
 
 Note.init(
@@ -33,6 +43,14 @@ Note.init(
         content: {
             type: DataTypes.TEXT,
             allowNull: false,
+        },
+        folder_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+            model: 'folders',
+            key: 'id',
+          },
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -51,4 +69,3 @@ Note.init(
 );
 
 export default Note;
-
