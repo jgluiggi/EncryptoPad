@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { 
     getAllUsers,
-    createUser,
+    login,
+    register,
     getUserById,
     getUserByUsername,
     updateUser,
@@ -72,7 +73,9 @@ const router = Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/create", createUser);
+router.post("/register", register);
+
+router.post("/login", login);
 
 /**
  * @swagger

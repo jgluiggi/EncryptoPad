@@ -1,12 +1,30 @@
 import { updateUser } from './../controllers/userController';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 import { UserRepository } from "../repository/userRepository";
 const userRepo = new UserRepository();
 
 export class UserServices {
-  async createUser(email: string, username: string, password: string) {
+  async register(email: string, username: string, password: string) {
     try {
-      const user = await userRepo.createUser(email, username, password);
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = await userRepo.createUser(email, username, hashedPassword);
       return user;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async login(email: string, password: string) {
+    try {
+      const user = await userRepo.getUserByEmail(email);
+      if (!user) throw new Error('Email ou senha inválida.');
+
+      const validPassword = await bcrypt.compare(password, user.password)
+      if (!validPassword) throw new Error('Email ou senha inválida.');
+
+      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, { expiresIn: '1h'});
+      return token;
     } catch (error) {
       return error;
     }
