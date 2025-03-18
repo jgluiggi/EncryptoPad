@@ -2,13 +2,18 @@ import { updateUser } from './../controllers/userController';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UserRepository } from "../repository/userRepository";
-const userRepo = new UserRepository();
 
 export class UserServices {
+  private userRepo: UserRepository;
+
+  constructor(userRepo?: UserRepository) {
+    this.userRepo = userRepo || new UserRepository();
+  }
+
   async register(email: string, username: string, password: string) {
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await userRepo.createUser(email, username, hashedPassword);
+      const user = await this.userRepo.createUser(email, username, hashedPassword);
       return user;
     } catch (error) {
       return error;
@@ -17,7 +22,7 @@ export class UserServices {
 
   async login(email: string, password: string) {
     try {
-      const user = await userRepo.getUserByEmail(email);
+      const user = await this.userRepo.getUserByEmail(email);
       if (!user) throw new Error('Email ou senha inválida.');
 
       const validPassword = await bcrypt.compare(password, user.password)
@@ -32,7 +37,7 @@ export class UserServices {
 
   async getAllUsers() {
     try {
-      const users = await userRepo.getAllUsers();
+      const users = await this.userRepo.getAllUsers();
       return users;
     } catch (error) {
       return error;
@@ -41,7 +46,7 @@ export class UserServices {
 
   async getUserById(id: number) {
     try {
-      const user = await userRepo.getUserById(id);
+      const user = await this.userRepo.getUserById(id);
       if (!user) {
         throw new Error("Usuário não encontrado");
       }
@@ -53,7 +58,7 @@ export class UserServices {
 
   async getUserByUsername(username: string) {
     try {
-      const user = await userRepo.getUserByUsername(username);
+      const user = await this.userRepo.getUserByUsername(username);
       if (!user) {
         throw new Error("Usuário não encontrado");
       }
@@ -65,7 +70,7 @@ export class UserServices {
 
   async updateUserUsername(id: number, username: string) {
     try {
-      const user = await userRepo.updateUserUsername(id, username);
+      const user = await this.userRepo.updateUserUsername(id, username);
       if (user[0] === 0) {
         throw new Error("Usuário não encontrado");
       }
@@ -77,7 +82,7 @@ export class UserServices {
 
   async updateUserPassword(id: number, password: string) {
     try {
-      const user = await userRepo.updateUserPassword(id, password);
+      const user = await this.userRepo.updateUserPassword(id, password);
       if (user[0] === 0) {
         throw new Error("Usuário não encontrado");
       }
@@ -89,7 +94,7 @@ export class UserServices {
 
   async updateUserEmail(id: number, email: string) {
     try {
-      const user = await userRepo.updateUserEmail(id, email);
+      const user = await this.userRepo.updateUserEmail(id, email);
       if (user[0] === 0) {
         throw new Error("Usuário não encontrado");
       }
@@ -101,7 +106,7 @@ export class UserServices {
 
   async deleteUser(id: number) {
     try {
-      const user = await userRepo.deleteUser(id);
+      const user = await this.userRepo.deleteUser(id);
       if (user === 0) {
         throw new Error("Usuário não encontrado");
       }
