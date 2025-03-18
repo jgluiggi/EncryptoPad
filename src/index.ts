@@ -1,6 +1,7 @@
 import * as express from "express";
 import helmet from "helmet";
 import * as dotenv from "dotenv";
+const { rateLimit } = require ("express-rate-limit");
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJSDoc from "swagger-jsdoc";
 import sequelize from "./config/database";
@@ -24,10 +25,16 @@ const swaggerOptions: swaggerJSDoc.Options = {
     apis: ["./routes/*.ts"],
 };
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: 100
+});
+
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
 app.use(express.json());
 app.use(helmet());
+app.use(limiter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users", userRoutes);
 app.use("/notes", noteRoutes);
