@@ -1,12 +1,12 @@
 import * as express from "express";
 import helmet from "helmet";
-import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJSDoc from "swagger-jsdoc";
 import sequelize from "./config/database";
 import userRoutes from "./routes/userRoutes";
 import noteRoutes from "./routes/noteRoutes";
+import folderRoutes from "./routes/folderRoutes";
 
 dotenv.config();
 
@@ -25,13 +25,13 @@ const swaggerOptions: swaggerJSDoc.Options = {
 };
 
 const swaggerSpec = swaggerJSDoc(swaggerOptions);
-const secret = process.env.JWT_SECRET;
 
 app.use(express.json());
 app.use(helmet());
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users", userRoutes);
 app.use("/notes", noteRoutes);
+app.use("/folders", folderRoutes);
 
 const port = process.env.PORT || 3000;
   

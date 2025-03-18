@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authMiddleware } from "../middlewares/authMiddleware"
 import folderController from "../controllers/folderController";
 
 const router = Router();
@@ -42,7 +43,7 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/folder'
  */ 
-router.get("/getAll", folderController.getAllFolders);
+router.get("/getAll", authMiddleware, folderController.getAllFolders);
 
 /** 
  * @swagger
@@ -67,7 +68,7 @@ router.get("/getAll", folderController.getAllFolders);
  *       404:
  *         description: folder not found
  */ 
-router.get("/getById/:id", folderController.getFolderById);
+router.get("/getById/:id", authMiddleware, folderController.getFolderById);
 
 /** 
  * @swagger
@@ -95,7 +96,7 @@ router.get("/getById/:id", folderController.getFolderById);
  *             schema:
  *               $ref: '#/components/schemas/folder'
  */
-router.post("/create", folderController.createFolder);
+router.post("/create", authMiddleware, folderController.createFolder);
 
  /** 
  * @swagger
@@ -131,7 +132,7 @@ router.post("/create", folderController.createFolder);
  *       404:
  *         description: folder not found
  */
-router.put("/update/:id", folderController.updateFolder);
+router.put("/update/:id", authMiddleware, folderController.updateFolder);
 
 /** 
  * @swagger
@@ -153,6 +154,6 @@ router.put("/update/:id", folderController.updateFolder);
  *         description: folder not found
  * 
  */
-router.delete("/delete/:id", folderController.deleteFolder);
+router.delete("/delete/:id", authMiddleware, folderController.deleteFolder);
 
 export default router;

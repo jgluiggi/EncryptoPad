@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authMiddleware } from "../middlewares/authMiddleware"
 import NoteController from "../controllers/noteController";
 
 const router = Router();
@@ -48,7 +49,7 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/Note'
  */ 
-router.get("/getAll", NoteController.getAllNotes);
+router.get("/getAll", authMiddleware, NoteController.getAllNotes);
 
 /** 
  * @swagger
@@ -73,7 +74,7 @@ router.get("/getAll", NoteController.getAllNotes);
  *       404:
  *         description: Note not found
  */ 
-router.get("/getById/:id", NoteController.getNoteById);
+router.get("/getById/:id", authMiddleware, NoteController.getNoteById);
 
 /** 
  * @swagger
@@ -101,7 +102,7 @@ router.get("/getById/:id", NoteController.getNoteById);
  *             schema:
  *               $ref: '#/components/schemas/Note'
  */
-router.post("/create", NoteController.createNote);
+router.post("/create", authMiddleware, NoteController.createNote);
 
  /** 
  * @swagger
@@ -137,7 +138,7 @@ router.post("/create", NoteController.createNote);
  *       404:
  *         description: Note not found
  */
-router.put("/update/:id", NoteController.updateNote);
+router.put("/update/:id", authMiddleware, NoteController.updateNote);
 
 /** 
  * @swagger
@@ -159,6 +160,6 @@ router.put("/update/:id", NoteController.updateNote);
  *         description: Note not found
  * 
  */
-router.delete("/delete/:id", NoteController.deleteNote);
+router.delete("/delete/:id", authMiddleware, NoteController.deleteNote);
 
 export default router;

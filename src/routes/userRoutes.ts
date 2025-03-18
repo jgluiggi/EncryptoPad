@@ -9,6 +9,7 @@ import {
     deleteUser,
     updateUserPassword
  } from "../controllers/userController";
+import { authMiddleware } from "../middlewares/authMiddleware"
 
 const router = Router();
 
@@ -180,7 +181,7 @@ router.get("/username/:username", getUserByUsername);
  *       500:
  *         description: Internal server error
  */
-router.put("/update/:id", updateUser);
+router.put("/update/:id", authMiddleware, updateUser);
 
 /**
  * @swagger
@@ -217,7 +218,7 @@ router.put("/update/:id", updateUser);
  *       500:
  *         description: Internal server error
  */
-router.put("/update/password/:id", updateUserPassword);
+router.put("/update/password/:id", authMiddleware, updateUserPassword);
 
 /**
  * @swagger
@@ -241,6 +242,6 @@ router.put("/update/password/:id", updateUserPassword);
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", deleteUser);
+router.delete("/:id", authMiddleware, deleteUser);
 
 export default router;
