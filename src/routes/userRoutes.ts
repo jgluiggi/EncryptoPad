@@ -76,6 +76,37 @@ const router = Router();
  */
 router.post("/register", register);
 
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Logs the user in
+ *     description: Endpoint to login a user in the system.
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "user@email.com"
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: "password123"
+ *     responses:
+ *       200:
+ *         description: User logged in
+ *       500:
+ *         description: Internal server error
+ */
 router.post("/login", login);
 
 /**
