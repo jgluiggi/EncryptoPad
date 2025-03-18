@@ -1,7 +1,7 @@
 import * as express from "express";
 import helmet from "helmet";
 import * as dotenv from "dotenv";
-import * as rateLimit from "express-rate-limit";
+const { rateLimit } = require ("express-rate-limit");
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJSDoc from "swagger-jsdoc";
 import sequelize from "./config/database";
