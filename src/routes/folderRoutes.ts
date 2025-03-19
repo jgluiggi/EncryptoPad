@@ -33,6 +33,8 @@ const router = Router();
  *     summary: Retrieve all folders
  *     description: Get a list of all folders
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     responses:
  *       200:
  *         description: Successful operation
@@ -52,6 +54,8 @@ router.get("/getAll", authMiddleware, folderController.getAllFolders);
  *     summary: Get a folder by ID
  *     description: Retrieve a specific folder using its ID
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -77,6 +81,8 @@ router.get("/getById/:id", authMiddleware, folderController.getFolderById);
  *     summary: Create a new folder
  *     description: Add a new folder to the database
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -87,7 +93,7 @@ router.get("/getById/:id", authMiddleware, folderController.getFolderById);
  *               name:
  *                 type: string
  *               user_id:
- *                 type: string
+ *                 type: number
  *     responses:
  *       201:
  *         description: folder created successfully
@@ -105,6 +111,8 @@ router.post("/create", authMiddleware, folderController.createFolder);
  *     summary: Update a folder
  *     description: Modify an existing folder
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -121,7 +129,7 @@ router.post("/create", authMiddleware, folderController.createFolder);
  *               name:
  *                 type: string
  *               user_id:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: folder updated successfully
@@ -141,6 +149,8 @@ router.put("/update/:id", authMiddleware, folderController.updateFolder);
  *     summary: Delete a folder
  *     description: Remove a folder from the database
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

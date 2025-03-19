@@ -13,6 +13,8 @@ const router = Router();
  *       properties:
  *         id:
  *           type: number
+ *         folder_id:
+ *           type: number
  *         title:
  *           type: string
  *         content:
@@ -39,6 +41,8 @@ const router = Router();
  *     summary: Retrieve all notes
  *     description: Get a list of all notes
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     responses:
  *       200:
  *         description: Successful operation
@@ -58,6 +62,8 @@ router.get("/getAll", authMiddleware, NoteController.getAllNotes);
  *     summary: Get a note by ID
  *     description: Retrieve a specific note using its ID
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -83,6 +89,8 @@ router.get("/getById/:id", authMiddleware, NoteController.getNoteById);
  *     summary: Create a new note
  *     description: Add a new note to the database
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -94,6 +102,8 @@ router.get("/getById/:id", authMiddleware, NoteController.getNoteById);
  *                 type: string
  *               content:
  *                 type: string
+ *               folder_id:
+ *                 type: number
  *     responses:
  *       201:
  *         description: Note created successfully
@@ -111,6 +121,8 @@ router.post("/create", authMiddleware, NoteController.createNote);
  *     summary: Update a note
  *     description: Modify an existing note
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -128,6 +140,8 @@ router.post("/create", authMiddleware, NoteController.createNote);
  *                 type: string
  *               content:
  *                 type: string
+ *               folder_id:
+ *                 type: number
  *     responses:
  *       200:
  *         description: Note updated successfully
@@ -147,6 +161,8 @@ router.put("/update/:id", authMiddleware, NoteController.updateNote);
  *     summary: Delete a note
  *     description: Remove a note from the database
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
