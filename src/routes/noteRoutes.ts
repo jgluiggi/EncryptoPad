@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authMiddleware } from "../middlewares/authMiddleware"
 import NoteController from "../controllers/noteController";
 
 const router = Router();
@@ -11,6 +12,8 @@ const router = Router();
  *       type: object
  *       properties:
  *         id:
+ *           type: number
+ *         folder_id:
  *           type: number
  *         title:
  *           type: string
@@ -38,6 +41,8 @@ const router = Router();
  *     summary: Retrieve all notes
  *     description: Get a list of all notes
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     responses:
  *       200:
  *         description: Successful operation
@@ -48,7 +53,7 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/Note'
  */ 
-router.get("/getAll", NoteController.getAllNotes);
+router.get("/getAll", authMiddleware, NoteController.getAllNotes);
 
 /** 
  * @swagger
@@ -57,6 +62,8 @@ router.get("/getAll", NoteController.getAllNotes);
  *     summary: Get a note by ID
  *     description: Retrieve a specific note using its ID
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -73,7 +80,7 @@ router.get("/getAll", NoteController.getAllNotes);
  *       404:
  *         description: Note not found
  */ 
-router.get("/getById/:id", NoteController.getNoteById);
+router.get("/getById/:id", authMiddleware, NoteController.getNoteById);
 
 /** 
  * @swagger
@@ -82,6 +89,8 @@ router.get("/getById/:id", NoteController.getNoteById);
  *     summary: Create a new note
  *     description: Add a new note to the database
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -93,6 +102,8 @@ router.get("/getById/:id", NoteController.getNoteById);
  *                 type: string
  *               content:
  *                 type: string
+ *               folder_id:
+ *                 type: number
  *     responses:
  *       201:
  *         description: Note created successfully
@@ -101,7 +112,7 @@ router.get("/getById/:id", NoteController.getNoteById);
  *             schema:
  *               $ref: '#/components/schemas/Note'
  */
-router.post("/create", NoteController.createNote);
+router.post("/create", authMiddleware, NoteController.createNote);
 
  /** 
  * @swagger
@@ -110,6 +121,8 @@ router.post("/create", NoteController.createNote);
  *     summary: Update a note
  *     description: Modify an existing note
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -127,6 +140,8 @@ router.post("/create", NoteController.createNote);
  *                 type: string
  *               content:
  *                 type: string
+ *               folder_id:
+ *                 type: number
  *     responses:
  *       200:
  *         description: Note updated successfully
@@ -137,7 +152,7 @@ router.post("/create", NoteController.createNote);
  *       404:
  *         description: Note not found
  */
-router.put("/update/:id", NoteController.updateNote);
+router.put("/update/:id", authMiddleware, NoteController.updateNote);
 
 /** 
  * @swagger
@@ -146,6 +161,8 @@ router.put("/update/:id", NoteController.updateNote);
  *     summary: Delete a note
  *     description: Remove a note from the database
  *     tags: [Notes]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -159,6 +176,6 @@ router.put("/update/:id", NoteController.updateNote);
  *         description: Note not found
  * 
  */
-router.delete("/delete/:id", NoteController.deleteNote);
+router.delete("/delete/:id", authMiddleware, NoteController.deleteNote);
 
 export default router;

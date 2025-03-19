@@ -3,13 +3,23 @@ import { UserServices } from './../services/userServices';
 
 const userService = new UserServices();
 
-export const createUser = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response) => {
   try {
     const { email, username, password } = req.body;
-    const user = await userService.createUser(email, username, password);
+    const user = await userService.register(email, username, password);
     res.json(user);
   } catch (error: any) {
     res.status(500).json({ message: "Erro ao criar o usuário", error: error.message });
+  }
+};
+
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    const user = await userService.login(email, password);
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: "E-mail ou senha incorretas: ", error: error.message });
   }
 };
 
