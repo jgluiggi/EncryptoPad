@@ -11,12 +11,18 @@ export class UserServices {
   }
 
   async register(email: string, username: string, password: string) {
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await this.userRepo.createUser(email, username, hashedPassword);
-      return user;
-    } catch (error) {
-      return error;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if (passwordRegex.test(password)) {
+      try {
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await this.userRepo.createUser(email, username, hashedPassword);
+        return user;
+      } catch (error) {
+        return error;
+      }
+    } else {
+      throw new Error('Senha fraca.');
     }
   }
 
@@ -81,15 +87,22 @@ export class UserServices {
   }
 
   async updateUserPassword(id: number, password: string) {
-    try {
-      const user = await this.userRepo.updateUserPassword(id, password);
-      if (user[0] === 0) {
-        throw new Error("Usuário não encontrado");
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    if (passwordRegex.test(password)) {
+      try {
+        const user = await this.userRepo.updateUserPassword(id, password);
+        if (user[0] === 0) {
+          throw new Error("Usuário não encontrado");
+        }
+        return user;
+      } catch (error) {
+        throw new Error(`Erro ao atualizar usuário: ${(error as Error).message}`);
       }
-      return user;
-    } catch (error) {
-      throw new Error(`Erro ao atualizar usuário: ${(error as Error).message}`);
+    } else {
+      throw new Error('Senha fraca.');
     }
+
   }
 
   async updateUserEmail(id: number, email: string) {
