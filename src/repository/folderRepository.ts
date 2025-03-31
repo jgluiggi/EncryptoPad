@@ -1,8 +1,9 @@
 import Folder from "../models/Folder";
+import { FindOptions } from 'sequelize';
 
 class FolderRepository {
-    static async findAll() {
-        return await Folder.findAll();
+    static async findAll(options: FindOptions = {}): Promise<Folder[]> {
+        return await Folder.findAll(options);
     }
 
     static async findById(id: number) {

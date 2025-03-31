@@ -61,7 +61,7 @@ router.get("/getAll", authMiddleware, folderController.getAllFolders);
  *         name: id
  *         required: true
  *         schema:
- *           type: string
+ *           type: number
  *     responses:
  *       200:
  *         description: Successful operation
@@ -73,6 +73,33 @@ router.get("/getAll", authMiddleware, folderController.getAllFolders);
  *         description: folder not found
  */ 
 router.get("/getById/:id", authMiddleware, folderController.getFolderById);
+
+/** 
+ * @swagger
+ * /folders/getByUserId/{id}:
+ *   get:
+ *     summary: Get folders by the user's id
+ *     description: Retrieve a specific folders using its owner's ID
+ *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/folder'
+ *       404:
+ *         description: no folders found
+ */ 
+router.get("/getByUserId/:id", authMiddleware, folderController.getFoldersByUserId);
 
 /** 
  * @swagger
