@@ -16,10 +16,10 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    const user = await userService.login(email, password);
-    res.json(user);
+    const token = await userService.login(email, password);
+    res.json({ token });
   } catch (error: any) {
-    res.status(500).json({ message: "E-mail ou senha incorretas: ", error: error.message });
+    res.status(401).json({ message: "E-mail ou senha incorretas ", error: error.message });
   }
 };
 

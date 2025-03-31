@@ -20,7 +20,7 @@ export class UserServices {
         const user = await this.userRepo.createUser(email, username, hashedPassword);
         return user;
       } catch (error) {
-        return error;
+        throw error;
       }
     } else {
       throw new Error('Senha fraca.');
@@ -30,15 +30,19 @@ export class UserServices {
   async login(email: string, password: string) {
     try {
       const user = await this.userRepo.getUserByEmail(email);
-      if (!user) throw new Error('Email ou senha inválida.');
+      if (!user) {
+        throw new Error('Email ou senha inválida.');
+      };
 
       const validPassword = await bcrypt.compare(password, user.password)
-      if (!validPassword) throw new Error('Email ou senha inválida.');
+      if (!validPassword) {
+        throw new Error('Email ou senha inválida.');
+      };
 
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, { expiresIn: '1h'});
       return token;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
@@ -47,7 +51,7 @@ export class UserServices {
       const users = await this.userRepo.getAllUsers();
       return users;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
