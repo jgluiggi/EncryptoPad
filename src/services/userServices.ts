@@ -11,7 +11,7 @@ export class UserServices {
   }
 
   async register(email: string, username: string, password: string) {
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/;
 
     if (passwordRegex.test(password)) {
       try {
@@ -87,7 +87,7 @@ export class UserServices {
   }
 
   async updateUserPassword(id: number, password: string) {
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/;
 
     if (passwordRegex.test(password)) {
       try {
