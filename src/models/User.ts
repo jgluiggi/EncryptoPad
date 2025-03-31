@@ -3,7 +3,7 @@ import sequelize from "../config/database";
 import Folder from "./Folder";
 
 interface UserAttributes {
-  id: number;
+  id?: number;
   email: string;
   username: string;
   password: string;
@@ -12,7 +12,7 @@ interface UserAttributes {
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-  public id!: number;
+  public id?: number;
   public email!: string;
   public username!: string;
   public password!: string;

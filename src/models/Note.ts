@@ -3,7 +3,7 @@ import sequelize from "../config/database";
 import Folder from './Folder';
 
 interface NoteAttributes {
-    id: number;
+    id?: number;
     title: string;
     content: string;
     folder_id: number;
@@ -14,7 +14,7 @@ interface NoteAttributes {
 interface NoteCreationAttributes extends Optional<NoteAttributes, "id" | "createdAt" | "updatedAt"> {}
 
 class Note extends Model<NoteAttributes, NoteCreationAttributes> implements NoteAttributes {
-    public id!: number;
+    public id?: number;
     public title!: string;
     public content!: string;
     public folder_id!: number;

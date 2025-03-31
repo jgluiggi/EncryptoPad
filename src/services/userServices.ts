@@ -10,10 +10,11 @@ export class UserServices {
     this.userRepo = userRepo || new UserRepository();
   }
 
-  async register(email: string, username: string, password: string) {
-    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/;
+  private passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/;
 
-    if (passwordRegex.test(password)) {
+  async register(email: string, username: string, password: string) {
+
+    if (this.passwordRegex.test(password)) {
       try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await this.userRepo.createUser(email, username, hashedPassword);
@@ -87,9 +88,7 @@ export class UserServices {
   }
 
   async updateUserPassword(id: number, password: string) {
-    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/;
-
-    if (passwordRegex.test(password)) {
+    if (this.passwordRegex.test(password)) {
       try {
         const user = await this.userRepo.updateUserPassword(id, password);
         if (user[0] === 0) {

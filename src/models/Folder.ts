@@ -4,7 +4,7 @@ import User from './User';
 import Note from './Note';
 
 interface FolderAttributes {
-  id: number;
+  id?: number;
   name: string;
   user_id: number;
 }
@@ -12,7 +12,7 @@ interface FolderAttributes {
 interface FolderCreationAttributes extends Optional<FolderAttributes, "id"> {}
 
 export class Folder extends Model<FolderAttributes, FolderCreationAttributes> implements FolderAttributes {
-  public id!: number;
+  public id?: number;
   public name!: string;
   public user_id!: number;
 
