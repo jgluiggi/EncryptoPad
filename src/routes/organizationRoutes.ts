@@ -35,7 +35,7 @@ const router = Router();
  *     summary: Cria uma nova organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -58,7 +58,7 @@ router.post("/create", authMiddleware, createOrganization);
  *     summary: Retorna todas as organizações
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de organizações
@@ -72,7 +72,7 @@ router.get("/", authMiddleware, getAllOrganizations);
  *     summary: Retorna uma organização pelo ID
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -92,7 +92,7 @@ router.get("/:id", authMiddleware, getOrganizationById);
  *     summary: Retorna uma organização pelo nome
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: name
  *         in: path
@@ -112,7 +112,7 @@ router.get("/name/:name", authMiddleware, getOrganizationByName);
  *     summary: Atualiza o nome de uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -141,7 +141,7 @@ router.put("/:id", authMiddleware, updateOrganizationName);
  *     summary: Deleta uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -161,7 +161,7 @@ router.delete("/:id", authMiddleware, deleteOrganization);
  *     summary: Adiciona um usuário a uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -186,7 +186,7 @@ router.post("/add-user", authMiddleware, addUserToOrganization);
  *     summary: Remove um usuário de uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -211,7 +211,7 @@ router.post("/remove-user", authMiddleware, removeUserFromOrganization);
  *     summary: Adiciona uma pasta a uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -236,7 +236,7 @@ router.post("/add-folder", authMiddleware, addFolderToOrganization);
  *     summary: Remove uma pasta de uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -261,7 +261,7 @@ router.post("/remove-folder", authMiddleware, removeFolderFromOrganization);
  *     summary: Adiciona uma nota a uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -286,7 +286,7 @@ router.post("/add-note", authMiddleware, addNoteToOrganization);
  *     summary: Remove uma nota de uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -311,7 +311,7 @@ router.post("/remove-note", authMiddleware, removeNoteFromOrganization);
  *     summary: Lista os usuários de uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -331,7 +331,7 @@ router.get("/:id/users", authMiddleware, getUsersByOrganizationId);
  *     summary: Lista as pastas de uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
@@ -351,7 +351,7 @@ router.get("/:id/folders", authMiddleware, getFoldersByOrganizationId);
  *     summary: Lista as notas de uma organização
  *     tags: [Organizations]
  *     security:
- *       - bearerAuth: []
+ *       - BearerAuth: []
  *     parameters:
  *       - name: id
  *         in: path
