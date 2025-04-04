@@ -8,6 +8,7 @@ import sequelize from "./config/database";
 import userRoutes from "./routes/userRoutes";
 import noteRoutes from "./routes/noteRoutes";
 import folderRoutes from "./routes/folderRoutes";
+import organizationRoutes from "./routes/organizationRoutes";
 
 dotenv.config();
 
@@ -49,6 +50,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/users", userRoutes);
 app.use("/notes", noteRoutes);
 app.use("/folders", folderRoutes);
+app.use("/organizations", organizationRoutes);
 
 const port = process.env.PORT || 3000;
   
