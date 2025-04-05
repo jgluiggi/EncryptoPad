@@ -1,8 +1,16 @@
-import { Model, DataTypes, Optional, BelongsToManyGetAssociationsMixin, BelongsToManyAddAssociationMixin, HasManyGetAssociationsMixin, HasManyAddAssociationMixin } from "sequelize";
+import {
+  Model,
+  DataTypes,
+  Optional,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+  BelongsToManyGetAssociationsMixin,
+} from "sequelize";
 import sequelize from "../config/database";
 import User from "./User";
-import Folder from "./Folder";
+import UserOrganization from "./UserOrganization";
 import Note from "./Note";
+import Folder from "./Folder";
 
 interface OrganizationAttributes {
   id?: number;
@@ -11,38 +19,41 @@ interface OrganizationAttributes {
 
 interface OrganizationCreationAttributes extends Optional<OrganizationAttributes, "id"> {}
 
-export class Organization extends Model<OrganizationAttributes, OrganizationCreationAttributes> implements OrganizationAttributes {
+export class Organization
+  extends Model<OrganizationAttributes, OrganizationCreationAttributes>
+  implements OrganizationAttributes
+{
   public id?: number;
   public name!: string;
 
   public getUsers!: BelongsToManyGetAssociationsMixin<User>;
-  public addUser!: BelongsToManyAddAssociationMixin<User, number>;
-  public removeUser!: BelongsToManyAddAssociationMixin<User, number>;
-  
-  public getFolders!: HasManyGetAssociationsMixin<Folder>;
-  public addFolder!: HasManyAddAssociationMixin<Folder, number>;
-  public removeFolder!: HasManyAddAssociationMixin<Folder, number>;
-  
+  public addUser!: HasManyAddAssociationMixin<User, number>;
+  public removeUser!: HasManyAddAssociationMixin<User, number>;
+
   public getNotes!: HasManyGetAssociationsMixin<Note>;
   public addNote!: HasManyAddAssociationMixin<Note, number>;
   public removeNote!: HasManyAddAssociationMixin<Note, number>;
 
+  public getFolders!: HasManyGetAssociationsMixin<Folder>;
+  public addFolder!: HasManyAddAssociationMixin<Folder, number>;
+  public removeFolder!: HasManyAddAssociationMixin<Folder, number>;
+
   public static associate() {
     Organization.belongsToMany(User, {
-      through: "UserOrganizations",
+      through: UserOrganization,
       foreignKey: "organization_id",
       otherKey: "user_id",
       as: "users",
     });
 
-    Organization.hasMany(Folder, {
-      foreignKey: "organization_id",
-      as: "folders",
-    });
-
     Organization.hasMany(Note, {
       foreignKey: "organization_id",
       as: "notes",
+    });
+
+    Organization.hasMany(Folder, {
+      foreignKey: "organization_id",
+      as: "folders",
     });
   }
 }
@@ -57,7 +68,6 @@ Organization.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
   },
   {

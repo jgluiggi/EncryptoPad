@@ -53,7 +53,7 @@ router.post("/create", authMiddleware, createOrganization);
 
 /**
  * @swagger
- * /organizations:
+ * /organizations/getAll:
  *   get:
  *     summary: Retorna todas as organizações
  *     tags: [Organizations]
@@ -63,11 +63,11 @@ router.post("/create", authMiddleware, createOrganization);
  *       200:
  *         description: Lista de organizações
  */
-router.get("/", authMiddleware, getAllOrganizations);
+router.get("/getAll", authMiddleware, getAllOrganizations);
 
 /**
  * @swagger
- * /organizations/{id}:
+ * /organizations/getById/{id}:
  *   get:
  *     summary: Retorna uma organização pelo ID
  *     tags: [Organizations]
@@ -83,11 +83,11 @@ router.get("/", authMiddleware, getAllOrganizations);
  *       200:
  *         description: Organização encontrada
  */
-router.get("/:id", authMiddleware, getOrganizationById);
+router.get("/getById/:id", authMiddleware, getOrganizationById);
 
 /**
  * @swagger
- * /organizations/name/{name}:
+ * /organizations/getByName/{name}:
  *   get:
  *     summary: Retorna uma organização pelo nome
  *     tags: [Organizations]
@@ -103,11 +103,11 @@ router.get("/:id", authMiddleware, getOrganizationById);
  *       200:
  *         description: Organização encontrada
  */
-router.get("/name/:name", authMiddleware, getOrganizationByName);
+router.get("/getByName/:name", authMiddleware, getOrganizationByName);
 
 /**
  * @swagger
- * /organizations/{id}:
+ * /organizations/updateName/{id}:
  *   put:
  *     summary: Atualiza o nome de uma organização
  *     tags: [Organizations]
@@ -132,11 +132,11 @@ router.get("/name/:name", authMiddleware, getOrganizationByName);
  *       200:
  *         description: Nome atualizado com sucesso
  */
-router.put("/:id", authMiddleware, updateOrganizationName);
+router.put("/updateName/:id", authMiddleware, updateOrganizationName);
 
 /**
  * @swagger
- * /organizations/{id}:
+ * /organizations/delete/{id}:
  *   delete:
  *     summary: Deleta uma organização
  *     tags: [Organizations]
@@ -152,11 +152,11 @@ router.put("/:id", authMiddleware, updateOrganizationName);
  *       204:
  *         description: Organização deletada com sucesso
  */
-router.delete("/:id", authMiddleware, deleteOrganization);
+router.delete("/delete/:id", authMiddleware, deleteOrganization);
 
 /**
  * @swagger
- * /organizations/add-user:
+ * /organizations/{organizationId}/add-user/{userId}:
  *   post:
  *     summary: Adiciona um usuário a uma organização
  *     tags: [Organizations]
@@ -170,14 +170,14 @@ router.delete("/:id", authMiddleware, deleteOrganization);
  *             type: object
  *             properties:
  *               organizationId:
- *                 type: string
+ *                 type: number
  *               userId:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: Usuário adicionado com sucesso
  */
-router.post("/add-user", authMiddleware, addUserToOrganization);
+router.post("/:organizationId/add-user/:userId", authMiddleware, addUserToOrganization);
 
 /**
  * @swagger

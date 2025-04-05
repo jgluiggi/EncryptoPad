@@ -1,26 +1,26 @@
-import { Organization } from '../models/Organization';
+import models from '../models';
 
 export class OrganizationRepository {
     async createOrganization(name: string) {
-        return await Organization.create({
+        return await models.Organization.create({
             name,
         });
     }
 
     async getAllOrganizations() {
-        return await Organization.findAll();
+        return await models.Organization.findAll();
     }
 
     async getOrganizationById(id: number) {
-        return await Organization.findByPk(id);
+        return await models.Organization.findByPk(id);
     }
 
     async getOrganizationByName(name: string) {
-        return await Organization.findOne({ where: { name } });
+        return await models.Organization.findOne({ where: { name } });
     }
 
     async updateOrganizationName(id: number, name: string) {
-        return await Organization.update(
+        return await models.Organization.update(
             {
                 name,
             },
@@ -33,7 +33,7 @@ export class OrganizationRepository {
     }
 
     async deleteOrganization(id: number) {
-        return await Organization.destroy({
+        return await models.Organization.destroy({
             where: {
                 id,
             },
@@ -44,8 +44,6 @@ export class OrganizationRepository {
         const organization = await this.getOrganizationById(organizationId);
         if (organization) {
             await organization.addUser(userId);
-        } else {
-            throw new Error('Organization not found');
         }
     }
 

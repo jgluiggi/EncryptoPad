@@ -2,11 +2,13 @@ import { Model, DataTypes, Optional, BelongsToGetAssociationMixin, HasManyGetAss
 import sequelize from "../config/database";
 import User from './User';
 import Note from './Note';
+import Organization from './Organization';
 
 interface FolderAttributes {
   id?: number;
   name: string;
   user_id: number;
+  organization_id?: number;
 }
 
 interface FolderCreationAttributes extends Optional<FolderAttributes, "id"> {}
@@ -15,6 +17,7 @@ export class Folder extends Model<FolderAttributes, FolderCreationAttributes> im
   public id?: number;
   public name!: string;
   public user_id!: number;
+  public organization_id?: number;
 
   public getParentUser!: BelongsToGetAssociationMixin<User>;
   public getNotes!: HasManyGetAssociationsMixin<Note>;
@@ -28,6 +31,10 @@ export class Folder extends Model<FolderAttributes, FolderCreationAttributes> im
     Folder.hasMany(Note, {
       foreignKey: 'folder_id',
       as: 'notes',
+    });
+    Folder.belongsTo(Organization, {
+      foreignKey: 'organization_id',
+      as: 'organization',
     });
   }
 }
@@ -50,6 +57,10 @@ Folder.init(
         model: 'users',
         key: 'id',
       },
+    },
+    organization_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
   },
   {

@@ -1,6 +1,8 @@
 import { Model, DataTypes, Optional, HasManyGetAssociationsMixin, HasManyAddAssociationMixin } from "sequelize";
 import sequelize from "../config/database";
 import Folder from "./Folder";
+import Organization from "./Organization";
+import UserOrganization from "./UserOrganization";
 
 interface UserAttributes {
   id?: number;
@@ -25,6 +27,13 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
             foreignKey: 'user_id',
             as: 'folders',
             });
+        
+        User.belongsToMany(Organization, {
+            through: UserOrganization,
+            foreignKey: 'user_id',
+            otherKey: 'organization_id',
+            as: 'organizations',
+        });
     }
 }
 
