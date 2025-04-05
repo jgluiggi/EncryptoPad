@@ -65,7 +65,7 @@ const router = Router();
  *               password:
  *                 type: string
  *                 format: password
- *                 example: "password123"
+ *                 example: "Password12!"
  *     responses:
  *       201:
  *         description: User successfully created
@@ -100,7 +100,7 @@ router.post("/register", register);
  *               password:
  *                 type: string
  *                 format: password
- *                 example: "password123"
+ *                 example: "Password12!"
  *     responses:
  *       200:
  *         description: User logged in
