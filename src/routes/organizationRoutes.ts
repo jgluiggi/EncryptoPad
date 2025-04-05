@@ -23,9 +23,21 @@ const router = Router();
 
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Organization:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: number
+ *         name:
+ *           type: string
+ */
+/**
+ * @swagger
  * tags:
  *   name: Organizations
- *   description: Endpoints para gerenciamento de organizações
+ *   description: Endpoints for managing organizations
  */
 
 /**
@@ -156,7 +168,7 @@ router.delete("/delete/:id", authMiddleware, deleteOrganization);
 
 /**
  * @swagger
- * /organizations/{organizationId}/add-user/{userId}:
+ * /organizations/add-user/:
  *   post:
  *     summary: Adiciona um usuário a uma organização
  *     tags: [Organizations]
@@ -177,7 +189,7 @@ router.delete("/delete/:id", authMiddleware, deleteOrganization);
  *       200:
  *         description: Usuário adicionado com sucesso
  */
-router.post("/:organizationId/add-user/:userId", authMiddleware, addUserToOrganization);
+router.post("/add-user", authMiddleware, addUserToOrganization);
 
 /**
  * @swagger
@@ -195,9 +207,9 @@ router.post("/:organizationId/add-user/:userId", authMiddleware, addUserToOrgani
  *             type: object
  *             properties:
  *               organizationId:
- *                 type: string
+ *                 type: number
  *               userId:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: Usuário removido com sucesso
@@ -220,9 +232,9 @@ router.post("/remove-user", authMiddleware, removeUserFromOrganization);
  *             type: object
  *             properties:
  *               organizationId:
- *                 type: string
+ *                 type: number
  *               folderId:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: Pasta adicionada com sucesso
@@ -245,9 +257,9 @@ router.post("/add-folder", authMiddleware, addFolderToOrganization);
  *             type: object
  *             properties:
  *               organizationId:
- *                 type: string
+ *                 type: number
  *               folderId:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: Pasta removida com sucesso
@@ -270,9 +282,9 @@ router.post("/remove-folder", authMiddleware, removeFolderFromOrganization);
  *             type: object
  *             properties:
  *               organizationId:
- *                 type: string
+ *                 type: number
  *               noteId:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: Nota adicionada com sucesso
@@ -295,9 +307,9 @@ router.post("/add-note", authMiddleware, addNoteToOrganization);
  *             type: object
  *             properties:
  *               organizationId:
- *                 type: string
+ *                 type: number
  *               noteId:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: Nota removida com sucesso
