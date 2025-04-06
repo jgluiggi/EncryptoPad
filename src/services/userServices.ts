@@ -1,4 +1,3 @@
-import { updateUser } from './../controllers/userController';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UserRepository } from "../repository/userRepository";
@@ -17,7 +16,7 @@ export class UserServices {
     if (this.passwordRegex.test(password)) {
       try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await this.userRepo.createUser(email, username, hashedPassword);
+        const user = await this.userRepo.createUser(email, username, hashedPassword, 1);
         return user;
       } catch (error) {
         throw error;
@@ -129,6 +128,18 @@ export class UserServices {
       return user;
     } catch (error) {
       throw new Error(`Erro ao deletar usuário: ${(error as Error).message}`);
+    }
+  }
+
+  async setUserRole(id: number, role_id: number) {
+    try {
+      const user = await this.userRepo.setUserRole(id, role_id);
+      if (user[0] === 0) {
+        throw new Error("Usuário não encontrado");
+      }
+      return user;
+    } catch (error) {
+      throw new Error(`Erro ao atualizar usuário: ${(error as Error).message}`);
     }
   }
 }

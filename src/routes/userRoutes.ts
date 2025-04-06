@@ -7,7 +7,8 @@ import {
     getUserByUsername,
     updateUser,
     deleteUser,
-    updateUserPassword
+    updateUserPassword,
+    setUserRole
  } from "../controllers/userController";
 import { authMiddleware } from "../middlewares/authMiddleware"
 
@@ -274,5 +275,39 @@ router.put("/update/password/:id", authMiddleware, updateUserPassword);
  *         description: Internal server error
  */
 router.delete("/:id", authMiddleware, deleteUser);
+
+/**
+ * @swagger
+ * /users/update/role/{id}:
+ *   put:
+ *     summary: Update user role
+ *     description: Updates the role of a specific user based on the provided ID.
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID to be updated
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               role_id:
+ *                 type: number
+ *                 example: 2
+ *     responses:
+ *       200:
+ *         description: User role successfully updated
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put("/update/role/:id", authMiddleware, setUserRole);
 
 export default router;

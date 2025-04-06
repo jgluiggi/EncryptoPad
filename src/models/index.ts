@@ -5,6 +5,7 @@ import Organization from "./Organization";
 import Folder from "./Folder";
 import Note from "./Note";
 import UserOrganization from "./UserOrganization";
+import Role from "./Role";
 
 const models = {
   User,
@@ -12,6 +13,7 @@ const models = {
   Folder,
   Note,
   UserOrganization,
+  Role,
 };
 
 Object.values(models).forEach((model: any) => {

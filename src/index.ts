@@ -9,6 +9,7 @@ import userRoutes from "./routes/userRoutes";
 import noteRoutes from "./routes/noteRoutes";
 import folderRoutes from "./routes/folderRoutes";
 import organizationRoutes from "./routes/organizationRoutes";
+import roleRoutes from "./routes/roleRoutes";
 
 dotenv.config();
 
@@ -51,6 +52,7 @@ app.use("/users", userRoutes);
 app.use("/notes", noteRoutes);
 app.use("/folders", folderRoutes);
 app.use("/organizations", organizationRoutes);
+app.use("/roles", roleRoutes);
 
 const port = process.env.PORT || 3000;
   
