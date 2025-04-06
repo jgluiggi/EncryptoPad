@@ -85,3 +85,14 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Erro ao deletar o usuário", error: error.message });
   }
 };
+
+export const setUserRole = async (req: Request, res: Response) => {
+  try {
+    const { role_id } = req.body;
+    const id = parseInt(req.params.id);
+    const user = await userService.setUserRole(id, role_id);
+    res.json(user);
+  } catch (error: any) {
+    res.status(500).json({ message: "Erro ao definir o papel do usuário", error: error.message });
+  }
+}

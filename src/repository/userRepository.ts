@@ -1,12 +1,13 @@
 import models from '../models';
 
 export class UserRepository {
-    async createUser (email: string, username: string, password: string) {
+    async createUser (email: string, username: string, password: string, role_id?: number) {
         return await models.User.create({
             email,
             username,
-            password
-            });
+            password,
+            role_id,
+        });
     }
 
     async getAllUsers() {
@@ -57,6 +58,16 @@ export class UserRepository {
 
     async deleteUser(id: number) {
         return await models.User.destroy({
+            where: {
+                id
+            }
+        });
+    }
+
+    async setUserRole(id: number, role_id: number) {
+        return await models.User.update({
+            role_id
+        }, {
             where: {
                 id
             }
