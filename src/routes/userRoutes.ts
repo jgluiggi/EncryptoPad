@@ -1,13 +1,16 @@
 import { Router } from "express";
 import { 
     getAllUsers,
-    createUser,
+    login,
+    register,
     getUserById,
     getUserByUsername,
     updateUser,
     deleteUser,
-    updateUserPassword
+    updateUserPassword,
+    setUserRole
  } from "../controllers/userController";
+import { authMiddleware } from "../middlewares/authMiddleware"
 
 const router = Router();
 
@@ -37,9 +40,9 @@ const router = Router();
 
 /**
  * @swagger
- * /users/create:
+ * /users/register:
  *   post:
- *     summary: Create a new user
+ *     summary: Register a new user
  *     description: Endpoint to create a new user in the system.
  *     tags: [Users]
  *     requestBody:
@@ -63,7 +66,7 @@ const router = Router();
  *               password:
  *                 type: string
  *                 format: password
- *                 example: "password123"
+ *                 example: "Password12!"
  *     responses:
  *       201:
  *         description: User successfully created
@@ -72,7 +75,40 @@ const router = Router();
  *       500:
  *         description: Internal server error
  */
-router.post("/create", createUser);
+router.post("/register", register);
+
+/**
+ * @swagger
+ * /users/login:
+ *   post:
+ *     summary: Logs the user in
+ *     description: Endpoint to login a user in the system.
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "user@email.com"
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: "Password12!"
+ *     responses:
+ *       200:
+ *         description: User logged in
+ *       500:
+ *         description: Internal server error
+ */
+router.post("/login", login);
 
 /**
  * @swagger
@@ -177,7 +213,7 @@ router.get("/username/:username", getUserByUsername);
  *       500:
  *         description: Internal server error
  */
-router.put("/update/:id", updateUser);
+router.put("/update/:id", authMiddleware, updateUser);
 
 /**
  * @swagger
@@ -214,7 +250,7 @@ router.put("/update/:id", updateUser);
  *       500:
  *         description: Internal server error
  */
-router.put("/update/password/:id", updateUserPassword);
+router.put("/update/password/:id", authMiddleware, updateUserPassword);
 
 /**
  * @swagger
@@ -238,6 +274,40 @@ router.put("/update/password/:id", updateUserPassword);
  *       500:
  *         description: Internal server error
  */
-router.delete("/:id", deleteUser);
+router.delete("/:id", authMiddleware, deleteUser);
+
+/**
+ * @swagger
+ * /users/update/role/{id}:
+ *   put:
+ *     summary: Update user role
+ *     description: Updates the role of a specific user based on the provided ID.
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID to be updated
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               role_id:
+ *                 type: number
+ *                 example: 2
+ *     responses:
+ *       200:
+ *         description: User role successfully updated
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.put("/update/role/:id", authMiddleware, setUserRole);
 
 export default router;

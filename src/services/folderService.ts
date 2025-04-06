@@ -1,4 +1,5 @@
 import FolderRepository from "../repository/folderRepository";
+import Folder from "../models/Folder";
 
 class FolderService {
     static async getAllFolders() {
@@ -9,6 +10,15 @@ class FolderService {
         const note = await FolderRepository.findById(id);
         if (!note) throw new Error("Folder not found");
         return note;
+    }
+
+    static async getFolderByUserId(userId: number): Promise<Folder[]> {
+        const folders = await FolderRepository.findAll({
+          where: {
+            user_id: userId,
+          },
+        });
+        return folders;
     }
 
     static async createFolder(data: { name: string; user_id: number; note_ids: number[]}) {

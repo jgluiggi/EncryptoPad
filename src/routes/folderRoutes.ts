@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { authMiddleware } from "../middlewares/authMiddleware"
 import folderController from "../controllers/folderController";
 
 const router = Router();
@@ -32,6 +33,8 @@ const router = Router();
  *     summary: Retrieve all folders
  *     description: Get a list of all folders
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     responses:
  *       200:
  *         description: Successful operation
@@ -42,7 +45,7 @@ const router = Router();
  *               items:
  *                 $ref: '#/components/schemas/folder'
  */ 
-router.get("/getAll", folderController.getAllFolders);
+router.get("/getAll", authMiddleware, folderController.getAllFolders);
 
 /** 
  * @swagger
@@ -51,12 +54,14 @@ router.get("/getAll", folderController.getAllFolders);
  *     summary: Get a folder by ID
  *     description: Retrieve a specific folder using its ID
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
- *           type: string
+ *           type: number
  *     responses:
  *       200:
  *         description: Successful operation
@@ -67,7 +72,34 @@ router.get("/getAll", folderController.getAllFolders);
  *       404:
  *         description: folder not found
  */ 
-router.get("/getById/:id", folderController.getFolderById);
+router.get("/getById/:id", authMiddleware, folderController.getFolderById);
+
+/** 
+ * @swagger
+ * /folders/getByUserId/{id}:
+ *   get:
+ *     summary: Get folders by the user's id
+ *     description: Retrieve a specific folders using its owner's ID
+ *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: number
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/folder'
+ *       404:
+ *         description: no folders found
+ */ 
+router.get("/getByUserId/:id", authMiddleware, folderController.getFoldersByUserId);
 
 /** 
  * @swagger
@@ -76,6 +108,8 @@ router.get("/getById/:id", folderController.getFolderById);
  *     summary: Create a new folder
  *     description: Add a new folder to the database
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -86,7 +120,7 @@ router.get("/getById/:id", folderController.getFolderById);
  *               name:
  *                 type: string
  *               user_id:
- *                 type: string
+ *                 type: number
  *     responses:
  *       201:
  *         description: folder created successfully
@@ -95,7 +129,7 @@ router.get("/getById/:id", folderController.getFolderById);
  *             schema:
  *               $ref: '#/components/schemas/folder'
  */
-router.post("/create", folderController.createFolder);
+router.post("/create", authMiddleware, folderController.createFolder);
 
  /** 
  * @swagger
@@ -104,6 +138,8 @@ router.post("/create", folderController.createFolder);
  *     summary: Update a folder
  *     description: Modify an existing folder
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,7 +156,7 @@ router.post("/create", folderController.createFolder);
  *               name:
  *                 type: string
  *               user_id:
- *                 type: string
+ *                 type: number
  *     responses:
  *       200:
  *         description: folder updated successfully
@@ -131,7 +167,7 @@ router.post("/create", folderController.createFolder);
  *       404:
  *         description: folder not found
  */
-router.put("/update/:id", folderController.updateFolder);
+router.put("/update/:id", authMiddleware, folderController.updateFolder);
 
 /** 
  * @swagger
@@ -140,6 +176,8 @@ router.put("/update/:id", folderController.updateFolder);
  *     summary: Delete a folder
  *     description: Remove a folder from the database
  *     tags: [folders]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -153,6 +191,6 @@ router.put("/update/:id", folderController.updateFolder);
  *         description: folder not found
  * 
  */
-router.delete("/delete/:id", folderController.deleteFolder);
+router.delete("/delete/:id", authMiddleware, folderController.deleteFolder);
 
 export default router;
