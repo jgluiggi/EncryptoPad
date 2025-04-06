@@ -1,33 +1,29 @@
-import models from '../models';
+import { updateUser } from './../controllers/userController';
+import { User } from "../models/User";
 
 export class UserRepository {
-    async createUser (email: string, username: string, password: string, role_id?: number) {
-        return await models.User.create({
+    async createUser (email: string, username: string, password: string) {
+        return await User.create({
             email,
             username,
-            password,
-            role_id,
-        });
+            password
+            });
     }
 
     async getAllUsers() {
-        return await models.User.findAll();
+        return await User.findAll();
     }
 
     async getUserById(id: number) {
-        return await models.User.findByPk(id);
+        return await User.findByPk(id);
     }
 
     async getUserByUsername(username: string) {
-        return await models.User.findOne({ where: { username } });
-    }
-
-    async getUserByEmail(email: string) {
-        return await models.User.findOne({ where: { email } });
+        return await User.findOne({ where: { username } });
     }
 
     async updateUserUsername(id: number, username: string) {
-        return await models.User.update({
+        return await User.update({
             username
         }, {
             where: {
@@ -37,7 +33,7 @@ export class UserRepository {
     }
 
     async updateUserPassword(id: number, password: string) {
-        return await models.User.update({
+        return await User.update({
             password
         }, {
             where: {
@@ -47,7 +43,7 @@ export class UserRepository {
     }
 
     async updateUserEmail(id: number, email: string) {
-        return await models.User.update({
+        return await User.update({
             email
         }, {
             where: {
@@ -57,17 +53,7 @@ export class UserRepository {
     }
 
     async deleteUser(id: number) {
-        return await models.User.destroy({
-            where: {
-                id
-            }
-        });
-    }
-
-    async setUserRole(id: number, role_id: number) {
-        return await models.User.update({
-            role_id
-        }, {
+        return await User.destroy({
             where: {
                 id
             }

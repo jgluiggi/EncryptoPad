@@ -20,15 +20,6 @@ class FolderController {
         }
     }
 
-    static async getFoldersByUserId(req: Request, res: Response) {
-        try {
-            const folders = await FolderService.getFolderByUserId(Number(req.params.id));
-            res.json(folders);
-        } catch (error: any) {
-            res.status(404).json({ error: error.message });
-        }
-    }
-
     static async createFolder(req: Request, res: Response) {
         try {
             const folder = await FolderService.createFolder(req.body);

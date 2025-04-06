@@ -1,62 +1,29 @@
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
+import { updateUser } from './../controllers/userController';
 import { UserRepository } from "../repository/userRepository";
+const userRepo = new UserRepository();
 
 export class UserServices {
-  private userRepo: UserRepository;
-
-  constructor(userRepo?: UserRepository) {
-    this.userRepo = userRepo || new UserRepository();
-  }
-
-  private passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z]).{8,}$/;
-
-  async register(email: string, username: string, password: string) {
-
-    if (this.passwordRegex.test(password)) {
-      try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await this.userRepo.createUser(email, username, hashedPassword, 1);
-        return user;
-      } catch (error) {
-        throw error;
-      }
-    } else {
-      throw new Error('Senha fraca.');
-    }
-  }
-
-  async login(email: string, password: string) {
+  async createUser(email: string, username: string, password: string) {
     try {
-      const user = await this.userRepo.getUserByEmail(email);
-      if (!user) {
-        throw new Error('Email ou senha inválida.');
-      };
-
-      const validPassword = await bcrypt.compare(password, user.password)
-      if (!validPassword) {
-        throw new Error('Email ou senha inválida.');
-      };
-
-      const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string, { expiresIn: '1h'});
-      return token;
+      const user = await userRepo.createUser(email, username, password);
+      return user;
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 
   async getAllUsers() {
     try {
-      const users = await this.userRepo.getAllUsers();
+      const users = await userRepo.getAllUsers();
       return users;
     } catch (error) {
-      throw error;
+      return error;
     }
   }
 
   async getUserById(id: number) {
     try {
-      const user = await this.userRepo.getUserById(id);
+      const user = await userRepo.getUserById(id);
       if (!user) {
         throw new Error("Usuário não encontrado");
       }
@@ -68,7 +35,7 @@ export class UserServices {
 
   async getUserByUsername(username: string) {
     try {
-      const user = await this.userRepo.getUserByUsername(username);
+      const user = await userRepo.getUserByUsername(username);
       if (!user) {
         throw new Error("Usuário não encontrado");
       }
@@ -80,7 +47,7 @@ export class UserServices {
 
   async updateUserUsername(id: number, username: string) {
     try {
-      const user = await this.userRepo.updateUserUsername(id, username);
+      const user = await userRepo.updateUserUsername(id, username);
       if (user[0] === 0) {
         throw new Error("Usuário não encontrado");
       }
@@ -91,25 +58,20 @@ export class UserServices {
   }
 
   async updateUserPassword(id: number, password: string) {
-    if (this.passwordRegex.test(password)) {
-      try {
-        const user = await this.userRepo.updateUserPassword(id, password);
-        if (user[0] === 0) {
-          throw new Error("Usuário não encontrado");
-        }
-        return user;
-      } catch (error) {
-        throw new Error(`Erro ao atualizar usuário: ${(error as Error).message}`);
+    try {
+      const user = await userRepo.updateUserPassword(id, password);
+      if (user[0] === 0) {
+        throw new Error("Usuário não encontrado");
       }
-    } else {
-      throw new Error('Senha fraca.');
+      return user;
+    } catch (error) {
+      throw new Error(`Erro ao atualizar usuário: ${(error as Error).message}`);
     }
-
   }
 
   async updateUserEmail(id: number, email: string) {
     try {
-      const user = await this.userRepo.updateUserEmail(id, email);
+      const user = await userRepo.updateUserEmail(id, email);
       if (user[0] === 0) {
         throw new Error("Usuário não encontrado");
       }
@@ -121,25 +83,13 @@ export class UserServices {
 
   async deleteUser(id: number) {
     try {
-      const user = await this.userRepo.deleteUser(id);
+      const user = await userRepo.deleteUser(id);
       if (user === 0) {
         throw new Error("Usuário não encontrado");
       }
       return user;
     } catch (error) {
       throw new Error(`Erro ao deletar usuário: ${(error as Error).message}`);
-    }
-  }
-
-  async setUserRole(id: number, role_id: number) {
-    try {
-      const user = await this.userRepo.setUserRole(id, role_id);
-      if (user[0] === 0) {
-        throw new Error("Usuário não encontrado");
-      }
-      return user;
-    } catch (error) {
-      throw new Error(`Erro ao atualizar usuário: ${(error as Error).message}`);
     }
   }
 }
