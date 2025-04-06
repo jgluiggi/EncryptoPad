@@ -16,7 +16,7 @@ export class UserServices {
     if (this.passwordRegex.test(password)) {
       try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await this.userRepo.createUser(email, username, hashedPassword, 1);
+        const user = await this.userRepo.createUser(email, username, hashedPassword);
         return user;
       } catch (error) {
         throw error;
