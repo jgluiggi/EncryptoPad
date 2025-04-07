@@ -4,7 +4,6 @@ import * as dotenv from "dotenv";
 const { rateLimit } = require ("express-rate-limit");
 import * as swaggerUi from "swagger-ui-express";
 import * as swaggerJSDoc from "swagger-jsdoc";
-import sequelize from "./config/database";
 import userRoutes from "./routes/userRoutes";
 import noteRoutes from "./routes/noteRoutes";
 import folderRoutes from "./routes/folderRoutes";
@@ -60,10 +59,6 @@ app.get("/", (req, res) => {
   res.send("API rodando!");
 });
 
-sequelize.sync({ force: true }).then(() => {
-    console.log("Banco de dados conectado!");
-    app.listen(port, () => console.log(`Server rodando em http://localhost:${port}`));
-  })
-  .catch((error) => {
-    console.error("Erro ao conectar ao banco de dados:", error);
-  });
+app.listen(port, () => {
+  console.log(`Server rodando em http://localhost:${port}`);
+});

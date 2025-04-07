@@ -1,4 +1,4 @@
-import models from '../models';
+import models from '../models/models';
 import { Folder } from '../models/Folder';
 import { FindOptions } from 'sequelize';
 

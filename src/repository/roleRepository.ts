@@ -1,4 +1,4 @@
-import models from "../models/index";
+import models from "../models/models";
 
 export class RoleRepository {
     async createRole(name: string) {
