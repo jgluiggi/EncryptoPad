@@ -2,12 +2,16 @@ import models from '../models';
 
 export class UserRepository {
     async createUser (email: string, username: string, password: string, role_id?: number) {
-        return await models.User.create({
+        let user = await models.User.create({
             email,
             username,
             password,
             role_id,
         });
+        if (user.id) {
+          await models.Folder.create({name: "root", user_id: user.id});
+        }
+        return user;
     }
 
     async getAllUsers() {
