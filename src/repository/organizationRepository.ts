@@ -1,4 +1,4 @@
-import models from '../models';
+import models from '../models/models';
 
 export class OrganizationRepository {
     async createOrganization(name: string) {
