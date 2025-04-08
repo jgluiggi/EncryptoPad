@@ -1,4 +1,4 @@
-import models from "../models";
+import models from "../models/models";
 
 class NoteRepository {
     static async findAll() {
