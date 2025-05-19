@@ -21,7 +21,7 @@
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.0",
-    "pg": "^8.14.1",
+    "pg": "^8.15.6",
     "pg-hstore": "^2.3.4",
     "projeto-pdw": "file:",
     "sequelize": "^6.37.5",
